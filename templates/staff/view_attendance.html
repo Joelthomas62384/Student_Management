@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if action is None %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% include 'messages.html' %}
+                <form method = 'post' action="?action=get_attendance">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>View Attendance</span></h5>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Course</label>
+                                <select class="form-control" name="course_id" required>
+                                   <option>Select Course</option>
+                                    {% for i in course %}
+                                   <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Session Year</label>
+                                <select class="form-control" name="session_id" required>
+                                   <option>Select Session Year</option>
+                                    {% for i in session %}
+                                   <option value="{{i.id}}">{{i.session_start}} To {{i.session_end}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Fetch Attendance</button>
+                        </div>
+                    </div>
+                </form>
+                
+                  {% else %}
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% include 'messages.html' %}
+                                <form method = 'post' action="{% url 'date_attendance' %}">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="form-title"><span>Take Attendance</span></h5>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <select class="form-control" name="course_id" required>
+                                                    <option value="{{ course_id.id }}">{{ course_id.name }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Session Year</label>
+                                                <select class="form-control" name="session_id" required>
+                                                   
+                                                    
+                                                   <option value="{{session_id.id}}">{{session_id.session_start}} To {{session_id.session_end}}</option>
+                                                   
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Dates</label>
+                                                <select class="form-control" name="date" required>
+                                                   <option>Select Date</option>
+                                                  
+                                                    {% for date in attendance %}
+                                                        <option value="{{ date }}">{{ date }}</option>
+                                                    {% endfor %}
+                                                
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary" >Fetch Attendance</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                {% endif %}
+
+
+                
+                {% endblock %}

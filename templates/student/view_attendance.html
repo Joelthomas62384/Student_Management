@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% include 'messages.html' %}
+                <form method = 'post' action="{% url 'student_date_attendance' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>View Attendance</span></h5>
+                        </div>
+                        
+                       
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Select Date</label>
+                                <select class="form-control" name="date" required>
+                                   <option>Select Date</option>
+                                   {% for i in attendance|slice:"-10:" %}
+
+                                   <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Fetch Attendance</button>
+                        </div>
+                    </div>
+                </form>
+                
+                  
+                
+                {% endblock %}

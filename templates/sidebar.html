@@ -1,0 +1,128 @@
+
+
+<div class="sidebar" id="sidebar">
+   <div class="sidebar-inner slimscroll">
+      <div id="sidebar-menu" class="sidebar-menu">
+         {% if user.user_type == '1' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'hod_home' %}active{% endif %} menu">
+               <a href="{% url 'hod_home' %}"><i class="fas fa-holly-berry"></i> <span>Dashboard</span></a>
+            </li>
+            
+           
+            <li class="submenu {% if request.resolver_match.url_name == 'add_student' or request.resolver_match.url_name == 'view_student'  or request.resolver_match.url_name == 'edit_student' %}active{% endif %} ">
+               <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                  <li><a href="{% url 'view_student' %}">View Student</a></li>
+               </ul>
+            </li>
+            <li class="submenu {% if request.resolver_match.url_name == 'add_staff' or request.resolver_match.url_name == 'view_staff' or request.resolver_match.url_name == 'edit_staff'  %}active{% endif %}">
+               <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Staff</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'add_staff' %}">Add Staff</a></li>
+                  <li><a href="{% url 'view_staff' %}">View Staff</a></li>
+               </ul>
+            </li>
+            
+            <li class="submenu {% if request.resolver_match.url_name == 'add_subject' or request.resolver_match.url_name == 'view_subject' or request.resolver_match.url_name == 'edit_subject'  %}active{% endif %}">
+               <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'add_subject' %}">Add Subject</a></li>
+                  <li><a href="{% url 'view_subject' %}">View Subject</a></li>
+               </ul>
+            </li>
+            <li class="submenu {% if request.resolver_match.url_name == 'add_session' or request.resolver_match.url_name == 'view_session' or request.resolver_match.url_name == 'edit_session'  %}active{% endif %}">
+               <a href="#"><i class="fas fa-clock"></i> <span> Session</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'add_session' %}">Add Session</a></li>
+                  <li><a href="{% url 'view_session' %}">View Session</a></li>
+               </ul>
+            </li>
+            <li class="menu {% if request.resolver_match.url_name == 'staff_send_notification' %}active{% endif %}">
+               <a href="{% url 'staff_send_notification' %}"><i class="fa fa-bell"></i> <span> Send Staff Notification</span></a>
+            </li>
+            <li class="menu {% if request.resolver_match.url_name == 'student_send_notification' %}active{% endif %}">
+               <a href="{% url 'student_send_notification' %}"><i class="fa fa-bell"></i> <span> Send Student Notification</span></a>
+            </li>
+            <li class="submenu {% if request.resolver_match.url_name == 'view_attendance' or request.resolver_match.url_name == 'take_attendance' or request.resolver_match.url_name == 'take_attendance2' or request.resolver_match.url_name == 'date_attendance'  %}active{% endif %}">
+               <a href="#"><i class="fas fa-clock"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'take_attendance' %}">Take Attendance</a></li>
+                  <li><a href="{% url 'view_attendance' %}">View Attandance</a></li>
+               </ul>
+            </li>
+
+            <li class="menu {% if request.resolver_match.url_name == 'staff_leave' %}active{% endif %}">
+               <a href="{% url 'staff_leave' %}"><i class="fas fa-envelope"></i> <span> Staff Leave</span></a>
+            </li>
+            <li class="menu {% if request.resolver_match.url_name == 'Student_leave' %}active{% endif %}">
+               <a href="{% url 'Student_leave' %}"><i class="fas fa-envelope"></i> <span> Student Leave</span></a>
+            </li>
+            <li class='menu'>
+               <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+            </li>
+            </ul>
+            {% elif user.user_type == '2' %}
+            <ul>
+               <li class="menu-title">
+                  <span>Main Menu</span>
+               </li>
+               <li class="{% if request.resolver_match.url_name == 'staff_home' %}active{% endif %} menu">
+                  <a href="{% url 'staff_home' %}"><i class="fas fa-holly-berry"></i> <span>Dashboard</span></a>
+               </li>
+               <li class="submenu {% if request.resolver_match.url_name == 'view_attendance' or request.resolver_match.url_name == 'take_attendance' or request.resolver_match.url_name == 'date_attendance' or request.resolver_match.url_name == 'take_attendance2' %}active{% endif %}">
+                  <a href="#"><i class="fas fa-clock"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>
+                  <ul>
+                     <li><a href="{% url 'take_attendance' %}">Take Attendance</a></li>
+                     <li><a href="{% url 'view_attendance' %}">View Attandance</a></li>
+                  </ul>
+               </li>
+               </li>
+            
+               <li class="{% if request.resolver_match.url_name == 'staff_apply_leave' %}active{% endif %} menu">
+                  <a href="{% url 'staff_apply_leave' %}"><i class="fas fa-envelope-open"></i> <span>Apply For Leave </span></a>
+               </li>
+               <li class="{% if request.resolver_match.url_name == 'staff_notifications' %}active{% endif %} menu">
+                  <a href="{% url 'staff_notifications' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+               </li>
+               
+               <li class='menu'>
+                  <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+               </li>
+               </ul>
+
+               {% else %}
+
+               <ul>
+                  <li class="menu-title">
+                     <span>Main Menu</span>
+                  </li>
+                  <li class="{% if request.resolver_match.url_name == 'student_home' %}active{% endif %} menu">
+                     <a href="{% url 'student_home' %}"><i class="fas fa-holly-berry"></i> <span>Dashboard</span></a>
+                  </li>
+                  <li class="{% if request.resolver_match.url_name == 'student_view_attendance' or request.resolver_match.url_name == 'student_view_attendance' or request.resolver_match.url_name == 'student_date_attendance'%}active{% endif %} menu">
+                     <a href="{% url 'student_view_attendance' %}"><i class="fas fa-calendar"></i> <span>View Attendance</span></a>
+                  </li>
+                 
+                  <li class="{% if request.resolver_match.url_name == 'student_apply_leave' %}active{% endif %} menu">
+                     <a href="{% url 'student_apply_leave' %}"><i class="fas fa-pray"></i> <span>Apply Leave</span></a>
+                  </li>
+                  <li class="{% if request.resolver_match.url_name == 'student_notifications'  %}active{% endif %} menu">
+                     <a href="{% url 'student_notifications' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+                  </li>
+                  <li class='menu'>
+                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+                  </li>
+                  </ul>
+
+
+
+            {% endif %}
+            </div>
+            
+               </div>
+            </div>

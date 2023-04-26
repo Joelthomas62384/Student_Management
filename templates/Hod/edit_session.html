@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% include 'messages.html' %}
+                <form method = 'post' action="{% url 'update_session' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Edit Session</span></h5>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Session Year Start</label>
+                                <div>
+                                   <input type="date" class="form-control" name="session_year_start" value="{% for i in session %}{{i.session_start}}{% endfor %}">
+                                </div>
+                             </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Session Year End</label>
+                                <div>
+                                   <input type="date" class="form-control"name="session_year_end" value="{% for i in session %}{{i.session_end}}{% endfor %}">
+                                   <input type="text" class="form-control"name="id" value="{% for i in session %}{{i.id}}{% endfor %}" hidden>
+                                </div>
+                             </div>
+                        </div>
+                      
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

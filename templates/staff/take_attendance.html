@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                {% include 'messages.html' %}
+                {% if action is None %}
+                <form method = 'post' action="?action=get_student">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Take Attendance</span></h5>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Course</label>
+                                <select class="form-control" name="course_id" required>
+                                   <option>Select Course</option>
+                                    {% for i in course %}
+                                   <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Session Year</label>
+                                <select class="form-control" name="session_id" required>
+                                   <option>Select Session Year</option>
+                                    {% for i in session %}
+                                   <option value="{{i.id}}">{{i.session_start}} To {{i.session_end}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Fetch Students</button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% include 'messages.html' %}
+                              
+                                <form method = 'post' action="{% url 'take_attendance2' %}">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="form-title"><span>Take Attendance</span></h5>
+                                        </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Course</label>
+                                                <select class="form-control" name="course_id" required>
+                                                   <option value={{course_send.id}}>{{course_send.name}}</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Session Year</label>
+                                                <select class="form-control" name="session_id" required>
+                                                   <option value ="{{get_session.id}}" > {{get_session.id}}{{get_session}}</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <select class="form-control" name="subject_id" required>
+                                                   <option>Select Subject</option>
+                                                    {% for i in subject %}
+                                                   <option value="{{i.id}}">{{i.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Fetch Students</button>
+                                        </div>
+                                    </div>
+                                </form>
+                
+                
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 24px;
+      }
+      
+      .switch input {display:none;}
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      input:checked + .one {
+        background-color: #2196F3;
+      }
+      input:checked + .two {
+        background-color: red;
+      }
+      
+      input:checked + .three {
+        background-color: grey;
+      }
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+      
+      input:checked + .slider:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+      }
+      
+      /*------ ADDED CSS ---------*/
+      .on
+      {
+        display: none;
+      }
+      
+      .on, .off
+      {
+        color: white;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        top: 50%;
+        left: 50%;
+        font-size: 8px;
+        font-family: Verdana, sans-serif;
+      }
+      
+      input:checked+ .slider .on
+      {display: block;}
+      
+      input:checked + .slider .off
+      {display: none;}
+      
+      /*--------- END --------*/
+      
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+      
+      .slider.round:before {
+        border-radius: 50%;}
+</style>
+<div class="row">
+    <div class="col-sm-12">
+       <div class="card">
+          <div class="card-body">
+<form method = 'post' action="{% url 'save_attendance' %}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <h5 class="form-title"><span>Take Attendance</span></h5>
+        </div>
+        
+        
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Subject</label>
+                <select class="form-control" name="subject_id" required>
+                    <option value = "{{subject.id}}">{{subject.name}}</option>
+                    
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Session Year</label>
+                <select class="form-control" name="session_id" required>
+                   <option value = "{{session.id}}">{{session.session_start}} To {{session.session_end}}</option>
+                    
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <label>Attendance Date</label>
+                <input type="text" name='date' value='{{today}}' readonly required class="form-control">
+                
+            </div>
+        </div>
+        
+        {% comment %} <div class="row"> {% endcomment %}
+            <div class="col-sm-12">
+               <div class="card card-table">
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table id="table_id" class="table table-hover table-center mb-0">
+                           <thead>
+                              <tr>
+                                 <th>ID</th>
+                                 <th>Student Names</th>
+                                 
+                                 
+                                 <th class="text-right">Action </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for i in student %}
+                              <tr>
+                                 <td>{{i.id}}</td>
+                                 <input type="text" value="{{i.id}}" name="student_id" hidden>
+                                 <input type="text" value="{{i.course_id}}" name="course_id" hidden>
+                                 <td>{{i.admin.first_name}} {{i.admin.last_name}}</td>
+                                 
+                                 
+                                 <td class="text-right">
+                                    <div class="actions">
+                                        
+                                        <label class="switch">
+                                            <input type="radio" name="radio_{{i.id}}" value="present" id="togBtn">
+                                            <div class="slider round one">
+                                             <!--ADDED HTML -->
+                                             <span class="on">Present</span>
+                                             <!--END-->
+                                            </div>
+                                           </label>
+                                        <br>
+                                        <label class="switch">
+                                            <input type="radio" name="radio_{{i.id}}" value='absent' id="togBtn">
+                                            <div class="slider round two" >
+                                             <!--ADDED HTML -->
+                                             <span class="on">Absent</span>
+                                             <!--END-->
+                                            </div>
+                                           </label>
+                                           <br>
+                                           <label class="switch">
+                                            <input type="radio" name="radio_{{i.id}}" value="late" id="togBtn">
+                                            <div class="slider round three" >
+                                             <!--ADDED HTML -->
+                                             <span class="on" >Late</span>
+                                             <!--END-->
+                                            </div>
+                                           </label>
+
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         {% comment %} </div> {% endcomment %}
+
+
+
+        
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+{% endblock  %}
